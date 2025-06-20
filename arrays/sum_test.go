@@ -9,6 +9,6 @@ func TestSum(t *testing.T) {
 	want := 15
 
 	if got != want {
-		t.Errorf("got %d and want %d, giver %v", got, want, numbers)
+		t.Errorf("got %d and want %d, given %v", got, want, numbers)
 	}
 }
