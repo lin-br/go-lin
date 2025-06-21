@@ -1,6 +1,9 @@
 package pointers
 
-import "testing"
+import (
+	"errors"
+	"testing"
+)
 
 func TestWallet(t *testing.T) {
 	t.Run("deposit", func(t *testing.T) {
@@ -9,7 +12,7 @@ func TestWallet(t *testing.T) {
 
 		assertBalance(t, wallet, Bitcoin(10))
 	})
-	t.Run("withdraw", func(t *testing.T) {
+	t.Run("withdraw with funds", func(t *testing.T) {
 		wallet := Wallet{balance: Bitcoin(20)}
 		wallet.Withdraw(Bitcoin(10))
 
@@ -38,7 +41,7 @@ func assertError(t testing.TB, got, want error) {
 	if got == nil {
 		t.Fatal("didn't get an error but wanted one")
 	}
-	if got != want {
+	if !errors.Is(got, want) {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
