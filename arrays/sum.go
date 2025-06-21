@@ -17,3 +17,11 @@ func SumAll(numbers ...[]int) []int {
 
 	return sums
 }
+
+func SumAllTails(numbersToSum ...[]int) (sums []int) {
+	for _, numbers := range numbersToSum {
+		tail := numbers[1:]
+		sums = append(sums, Sum(tail))
+	}
+	return
+}
