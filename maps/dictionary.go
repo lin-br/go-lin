@@ -3,8 +3,9 @@ package maps
 import "errors"
 
 const (
-	ErrorNotFound = DictionaryErr("could not find the word you were looking for")
-	ErrWordExists = DictionaryErr("cannot add word because it already exists")
+	ErrorNotFound          = DictionaryErr("could not find the word you were looking for")
+	ErrorWordExists        = DictionaryErr("cannot add word because it already exists")
+	ErrorWordDoesNotExists = DictionaryErr("cannot perform operation on word because it does not exist")
 )
 
 type DictionaryErr string
@@ -31,7 +32,7 @@ func (d Dictionary) Add(word, definition string) error {
 	case errors.Is(err, ErrorNotFound):
 		d[word] = definition
 	case err == nil:
-		return ErrWordExists
+		return ErrorWordExists
 	default:
 		return err
 	}
@@ -39,6 +40,17 @@ func (d Dictionary) Add(word, definition string) error {
 	return nil
 }
 
-func (d Dictionary) Update(key, value string) {
-	d[key] = value
+func (d Dictionary) Update(key, value string) error {
+	_, err := d.Search(key)
+
+	switch {
+	case errors.Is(err, ErrorNotFound):
+		return ErrorWordDoesNotExists
+	case err == nil:
+		d[key] = value
+	default:
+		return err
+	}
+
+	return nil
 }
