@@ -54,3 +54,18 @@ func (d Dictionary) Update(key, value string) error {
 
 	return nil
 }
+
+func (d Dictionary) Delete(key string) error {
+	_, err := d.Search(key)
+
+	switch {
+	case errors.Is(err, ErrorNotFound):
+		return ErrorWordDoesNotExists
+	case err == nil:
+		delete(d, key)
+	default:
+		return err
+	}
+
+	return nil
+}
