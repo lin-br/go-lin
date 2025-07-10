@@ -4,13 +4,21 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
+)
+
+const (
+	countdownStart = 3
+	finalWord      = "Go!"
 )
 
 func Countdown(out io.Writer) {
-	for i := 3; i > 0; i-- {
+	for i := countdownStart; i > 0; i-- {
 		fmt.Fprintln(out, i)
+		time.Sleep(1 * time.Second)
 	}
-	fmt.Fprintf(out, "Go!")
+
+	fmt.Fprintf(out, finalWord)
 }
 
 func main() {
