@@ -1,4 +1,4 @@
-package _8_dependency_injection
+package dependency_injection
 
 import (
 	"bytes"
