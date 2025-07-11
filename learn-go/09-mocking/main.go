@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"time"
 )
 
 const (
@@ -12,15 +11,15 @@ const (
 	finalWord      = "Go!"
 )
 
-func Countdown(out io.Writer) {
+func Countdown(out io.Writer, sleeper Sleeper) {
 	for i := countdownStart; i > 0; i-- {
 		fmt.Fprintln(out, i)
-		time.Sleep(1 * time.Second)
+		sleeper.Sleep()
 	}
 
 	fmt.Fprintf(out, finalWord)
 }
 
 func main() {
-	Countdown(os.Stdout)
+	Countdown(os.Stdout, &DefaultSleeper{})
 }
