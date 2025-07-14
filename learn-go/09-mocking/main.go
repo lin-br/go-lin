@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"iter"
 	"os"
 )
 
@@ -12,15 +13,21 @@ const (
 )
 
 func Countdown(out io.Writer, sleeper Sleeper) {
-	for i := countdownStart; i > 0; i-- {
+	for i := range countDownFrom(countdownStart) {
+		fmt.Fprintln(out, i)
 		sleeper.Sleep()
 	}
-
-	for i := countdownStart; i > 0; i-- {
-		fmt.Fprintln(out, i)
-	}
-
 	fmt.Fprint(out, finalWord)
+}
+
+func countDownFrom(from int) iter.Seq[int] {
+	return func(yield func(int) bool) {
+		for i := from; i > 0; i-- {
+			if !yield(i) {
+				return
+			}
+		}
+	}
 }
 
 func main() {
