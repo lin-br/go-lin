@@ -28,12 +28,12 @@ Go!`
 		Countdown(spySleepPrinter, spySleepPrinter)
 
 		want := []string{
-			sleep,
-			sleep,
+			write,
 			sleep,
 			write,
+			sleep,
 			write,
-			write,
+			sleep,
 			write,
 		}
 
