@@ -7,6 +7,9 @@ func walk(x interface{}, fn func(input string)) {
 
 	for i := range val.NumField() {
 		field := val.Field(i)
-		fn(field.String())
+
+		if field.Kind() == reflect.String {
+			fn(field.String())
+		}
 	}
 }
