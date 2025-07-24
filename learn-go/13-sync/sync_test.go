@@ -18,7 +18,7 @@ func TestCounter(t *testing.T) {
 		wantedCount := 1000
 		counter := Counter{}
 
-		var wg sync.WaitGroup
+		wg := sync.WaitGroup{}
 		wg.Add(wantedCount)
 
 		for i := 0; i < wantedCount; i++ {
