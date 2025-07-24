@@ -5,6 +5,10 @@ import "reflect"
 func walk(x interface{}, fn func(input string)) {
 	val := reflect.ValueOf(x)
 
+	if val.Kind() == reflect.Pointer {
+		val = val.Elem()
+	}
+
 	for i := range val.NumField() {
 		field := val.Field(i)
 
@@ -14,7 +18,7 @@ func walk(x interface{}, fn func(input string)) {
 		case reflect.Struct:
 			walk(field.Interface(), fn)
 		default:
-			panic("unhandled default case")
+			// Do nothing for non-string fields
 		}
 	}
 }
