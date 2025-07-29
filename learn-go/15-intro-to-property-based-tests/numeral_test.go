@@ -7,12 +7,21 @@ import (
 
 func ConvertToRoman(arabic int) string {
 	var result strings.Builder
-	for i := 0; i < arabic; i++ {
-		result.WriteString("I")
+	for arabic > 0 {
+		switch {
+		case arabic > 4:
+			result.WriteString("V")
+			arabic -= 5
+		case arabic > 3:
+			result.WriteString("IV")
+			arabic -= 4
+		default:
+			result.WriteString("I")
+			arabic--
+		}
 	}
 	return result.String()
 }
-
 func TestRomanNumerals(t *testing.T) {
 	cases := []struct {
 		Description string
@@ -22,6 +31,11 @@ func TestRomanNumerals(t *testing.T) {
 		{"1 gets converted to I", 1, "I"},
 		{"2 gets converted to II", 2, "II"},
 		{"3 gets converted to III", 3, "III"},
+		{"4 gets converted to IV (can't repeat more than 3 times)", 4, "IV"},
+		{"5 gets converted to V", 5, "V"},
+		{"6 gets converted to V", 6, "VI"},
+		{"7 gets converted to V", 7, "VII"},
+		{"8 gets converted to V", 8, "VIII"},
 	}
 
 	for _, test := range cases {
