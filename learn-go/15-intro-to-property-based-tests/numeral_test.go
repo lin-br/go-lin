@@ -9,6 +9,9 @@ func ConvertToRoman(arabic int) string {
 	var result strings.Builder
 	for arabic > 0 {
 		switch {
+		case arabic > 8:
+			result.WriteString("IX")
+			arabic -= 9
 		case arabic > 4:
 			result.WriteString("V")
 			arabic -= 5
@@ -36,6 +39,7 @@ func TestRomanNumerals(t *testing.T) {
 		{"6 gets converted to V", 6, "VI"},
 		{"7 gets converted to V", 7, "VII"},
 		{"8 gets converted to V", 8, "VIII"},
+		{"9 gets converted to IX", 9, "IX"},
 	}
 
 	for _, test := range cases {
