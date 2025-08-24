@@ -14,7 +14,7 @@ func NewPostsFromFS(fileSystem fs.FS) ([]Post, error) {
 	for _, f := range dir {
 		post, err := getPost(fileSystem, f)
 		if err != nil {
-			return nil, err //todo: needs clarification, should we totally fail if one file fails? or just ignore?
+			return nil, err
 		}
 		posts = append(posts, post)
 	}
