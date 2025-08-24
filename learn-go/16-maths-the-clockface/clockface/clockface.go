@@ -11,15 +11,15 @@ type Point struct {
 	Y float64
 }
 
-func secondHandPoint(t time.Time) Point {
+func SecondHandPoint(t time.Time) Point {
 	return angleToPoint(secondsInRadians(t))
 }
 
-func minuteHandPoint(t time.Time) Point {
+func MinuteHandPoint(t time.Time) Point {
 	return angleToPoint(minutesInRadians(t))
 }
 
-func hourHandPoint(t time.Time) Point {
+func HourHandPoint(t time.Time) Point {
 	return angleToPoint(hoursInRadians(t))
 }
 
