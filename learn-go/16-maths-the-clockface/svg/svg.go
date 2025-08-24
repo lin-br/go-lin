@@ -18,33 +18,33 @@ const (
 
 // Write writes an SVG representation of an analogue clock, showing the time t, to the writer w
 func Write(w io.Writer, t time.Time) {
-	io.WriteString(w, svgStart)
-	io.WriteString(w, bezel)
+	_, _ = io.WriteString(w, svgStart)
+	_, _ = io.WriteString(w, bezel)
 	secondHand(w, t)
 	minuteHand(w, t)
 	hourHand(w, t)
-	io.WriteString(w, svgEnd)
+	_, _ = io.WriteString(w, svgEnd)
 }
 
 func secondHand(w io.Writer, t time.Time) {
 	p := makeHand(clockface.SecondHandPoint(t), secondHandLength)
-	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#f00;stroke-width:3px;"/>`, p.X, p.Y)
+	_, _ = fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#f00;stroke-width:3px;"/>`, p.X, p.Y)
 }
 
 func minuteHand(w io.Writer, t time.Time) {
 	p := makeHand(clockface.MinuteHandPoint(t), minuteHandLength)
-	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
+	_, _ = fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
 }
 
 func hourHand(w io.Writer, t time.Time) {
 	p := makeHand(clockface.HourHandPoint(t), hourHandLength)
-	fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
+	_, _ = fmt.Fprintf(w, `<line x1="150" y1="150" x2="%.3f" y2="%.3f" style="fill:none;stroke:#000;stroke-width:3px;"/>`, p.X, p.Y)
 }
 
 func makeHand(p clockface.Point, length float64) clockface.Point {
-	p = clockface.Point{p.X * length, p.Y * length}
-	p = clockface.Point{p.X, -p.Y}
-	return clockface.Point{p.X + clockCentreX, p.Y + clockCentreY}
+	p = clockface.Point{X: p.X * length, Y: p.Y * length}
+	p = clockface.Point{X: p.X, Y: -p.Y}
+	return clockface.Point{X: p.X + clockCentreX, Y: p.Y + clockCentreY}
 }
 
 const svgStart = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
