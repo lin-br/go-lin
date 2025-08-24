@@ -12,7 +12,7 @@ var (
 )
 
 type PostRenderer struct {
-	templ *template.Template
+	template *template.Template
 }
 
 func NewPostRenderer() (*PostRenderer, error) {
@@ -21,14 +21,13 @@ func NewPostRenderer() (*PostRenderer, error) {
 		return nil, err
 	}
 
-	return &PostRenderer{templ: templ}, nil
+	return &PostRenderer{template: templ}, nil
 }
 
 func (r *PostRenderer) Render(w io.Writer, p Post) error {
+	return r.template.ExecuteTemplate(w, "blog.gohtml", p)
+}
 
-	if err := r.templ.ExecuteTemplate(w, "blog.gohtml", p); err != nil {
-		return err
-	}
-
-	return nil
+func (r *PostRenderer) RenderIndex(w io.Writer, posts []Post) error {
+	return r.template.ExecuteTemplate(w, "index.gohtml", posts)
 }
