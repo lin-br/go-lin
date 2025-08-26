@@ -1,6 +1,7 @@
 package generics_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/lin-br/go-lin/generics"
@@ -28,6 +29,25 @@ func TestBadBank(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
+	type Person struct {
+		Name string
+	}
+
+	t.Run("Find the best programmer", func(t *testing.T) {
+		people := []Person{
+			Person{Name: "Kent Beck"},
+			Person{Name: "Martin Fowler"},
+			Person{Name: "Chris James"},
+		}
+
+		king, found := generics.Find(people, func(p Person) bool {
+			return strings.Contains(p.Name, "Chris")
+		})
+
+		AssertTrue(t, found)
+		AssertEqual(t, king, Person{Name: "Chris James"})
+	})
+
 	t.Run("find first even number", func(t *testing.T) {
 		numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 
