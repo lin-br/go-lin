@@ -1,4 +1,4 @@
-package asserts
+package generics_test
 
 import "testing"
 
