@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	api "github.com/lin-br/go-lin/learn-go/20-build-an-application"
-	"github.com/lin-br/go-lin/learn-go/20-build-an-application/db"
+	api "github.com/lin-br/go-lin/applications/simple-http-server"
+	"github.com/lin-br/go-lin/applications/simple-http-server/db"
 )
 
 func main() {

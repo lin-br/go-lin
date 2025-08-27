@@ -1,4 +1,4 @@
-package api_test
+package simple_http_server_test
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	api "github.com/lin-br/go-lin/learn-go/20-build-an-application"
+	api "github.com/lin-br/go-lin/applications/simple-http-server"
 )
 
 type StubPlayerStore struct {

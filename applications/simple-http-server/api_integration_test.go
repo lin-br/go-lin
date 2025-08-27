@@ -1,12 +1,12 @@
-package api_test
+package simple_http_server_test
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	api "github.com/lin-br/go-lin/learn-go/20-build-an-application"
-	"github.com/lin-br/go-lin/learn-go/20-build-an-application/db"
+	api "github.com/lin-br/go-lin/applications/simple-http-server"
+	"github.com/lin-br/go-lin/applications/simple-http-server/db"
 )
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {

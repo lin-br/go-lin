@@ -1,4 +1,4 @@
-package api
+package simple_http_server
 
 import (
 	"fmt"
