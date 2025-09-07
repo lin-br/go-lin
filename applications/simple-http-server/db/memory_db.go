@@ -1,6 +1,6 @@
 package db
 
-import simple_http_server "github.com/lin-br/go-lin/applications/simple-http-server"
+import api "github.com/lin-br/go-lin/applications/simple-http-server"
 
 // NewInMemoryPlayerStore a constructor function
 func NewInMemoryPlayerStore() *InMemoryPlayerStore {
@@ -19,6 +19,6 @@ func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
 	return i.store[name]
 }
 
-func (i *InMemoryPlayerStore) GetLeagueTable() []simple_http_server.Player {
+func (i *InMemoryPlayerStore) GetLeagueTable() []api.Player {
 	return nil
 }
