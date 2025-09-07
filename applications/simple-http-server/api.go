@@ -7,9 +7,12 @@ import (
 	"strings"
 )
 
+const JsonContentType = "application/json"
+
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
+	GetLeagueTable() []Player
 }
 
 type PlayerServer struct {
@@ -43,16 +46,9 @@ func (p *PlayerServer) playersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("content-type", "application/json")
-	json.NewEncoder(w).Encode(p.getLeagueTable())
+	w.Header().Set("content-type", JsonContentType)
+	json.NewEncoder(w).Encode(p.Store.GetLeagueTable())
 	w.WriteHeader(http.StatusOK)
-}
-
-func (p *PlayerServer) getLeagueTable() []Player {
-	return []Player{
-		{Name: "Pepper", Wins: 10},
-		{Name: "Floyd", Wins: 10},
-	}
 }
 
 func (p *PlayerServer) showScore(w http.ResponseWriter, player string) {
