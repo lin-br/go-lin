@@ -9,6 +9,6 @@ import (
 )
 
 func main() {
-	server := &api.PlayerServer{Store: db.NewInMemoryPlayerStore()}
+	server := api.NewPlayerServer(db.NewInMemoryPlayerStore())
 	log.Fatal(http.ListenAndServe(":8080", server))
 }
