@@ -1,8 +1,9 @@
 package db
 
-import api "github.com/lin-br/go-lin/applications/simple-http-server"
+import (
+	"github.com/lin-br/go-lin/applications/simple-http-server/model"
+)
 
-// NewInMemoryPlayerStore a constructor function
 func NewInMemoryPlayerStore() *InMemoryPlayerStore {
 	return &InMemoryPlayerStore{map[string]int{}}
 }
@@ -19,10 +20,10 @@ func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
 	return i.store[name]
 }
 
-func (i *InMemoryPlayerStore) GetLeagueTable() []api.Player {
-	league := make([]api.Player, len(i.store))
+func (i *InMemoryPlayerStore) GetLeagueTable() []model.Player {
+	league := make([]model.Player, len(i.store))
 	for name, wins := range i.store {
-		league = append(league, api.Player{Name: name, Wins: wins})
+		league = append(league, model.Player{Name: name, Wins: wins})
 	}
 	return league
 }

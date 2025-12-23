@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+
+	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
 
 const JsonContentType = "application/json"
@@ -12,7 +14,7 @@ const JsonContentType = "application/json"
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
-	GetLeagueTable() []Player
+	GetLeagueTable() []model.Player
 }
 
 type PlayerServer struct {

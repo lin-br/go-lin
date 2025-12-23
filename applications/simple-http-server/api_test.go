@@ -8,12 +8,14 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+
+	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
 
 type StubPlayerStore struct {
 	scores      map[string]int
 	winCalls    []string
-	leagueTable []Player
+	leagueTable []model.Player
 }
 
 func (s *StubPlayerStore) GetPlayerScore(name string) int {
@@ -25,7 +27,7 @@ func (s *StubPlayerStore) RecordWin(name string) {
 	s.winCalls = append(s.winCalls, name)
 }
 
-func (s *StubPlayerStore) GetLeagueTable() []Player {
+func (s *StubPlayerStore) GetLeagueTable() []model.Player {
 	return s.leagueTable
 }
 
@@ -53,7 +55,7 @@ func assertStatus(t testing.TB, got, want int) {
 	}
 }
 
-func getLeagueFromResponse(t testing.TB, body io.Reader) (league []Player) {
+func getLeagueFromResponse(t testing.TB, body io.Reader) (league []model.Player) {
 	t.Helper()
 	err := json.NewDecoder(body).Decode(&league)
 
@@ -64,7 +66,7 @@ func getLeagueFromResponse(t testing.TB, body io.Reader) (league []Player) {
 	return
 }
 
-func assertLeague(t testing.TB, got, want []Player) {
+func assertLeague(t testing.TB, got, want []model.Player) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %v want %v", got, want)
@@ -158,7 +160,7 @@ func TestLeague(t *testing.T) {
 	})
 
 	t.Run("it returns the league table as JSON", func(t *testing.T) {
-		wantedLeague := []Player{
+		wantedLeague := []model.Player{
 			{"Cleo", 32},
 			{"Chris", 20},
 			{"Tiest", 14},

@@ -1,4 +1,4 @@
-package simple_http_server
+package model
 
 type Player struct {
 	Name string

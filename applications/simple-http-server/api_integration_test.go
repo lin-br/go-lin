@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	. "github.com/lin-br/go-lin/applications/simple-http-server/db"
+	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
@@ -31,7 +32,7 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 		assertStatus(t, response.Code, http.StatusOK)
 
 		got := getLeagueFromResponse(t, response.Body)
-		want := []Player{
+		want := []model.Player{
 			{"Pepper", 3},
 		}
 		assertLeague(t, got, want)
