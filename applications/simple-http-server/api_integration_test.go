@@ -1,11 +1,10 @@
-package simple_http_server_test
+package simple_http_server
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	. "github.com/lin-br/go-lin/applications/simple-http-server"
 	. "github.com/lin-br/go-lin/applications/simple-http-server/db"
 )
 

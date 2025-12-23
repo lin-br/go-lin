@@ -1,4 +1,4 @@
-package simple_http_server_test
+package simple_http_server
 
 import (
 	"encoding/json"
@@ -8,8 +8,6 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
-
-	. "github.com/lin-br/go-lin/applications/simple-http-server"
 )
 
 type StubPlayerStore struct {
