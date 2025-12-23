@@ -5,13 +5,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	api "github.com/lin-br/go-lin/applications/simple-http-server"
-	"github.com/lin-br/go-lin/applications/simple-http-server/db"
+	. "github.com/lin-br/go-lin/applications/simple-http-server"
+	. "github.com/lin-br/go-lin/applications/simple-http-server/db"
 )
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
-	store := db.NewInMemoryPlayerStore()
-	server := api.NewPlayerServer(store)
+	store := NewInMemoryPlayerStore()
+	server := NewPlayerServer(store)
 	player := "Pepper"
 
 	server.ServeHTTP(httptest.NewRecorder(), newPostWinRequest(player))
@@ -32,7 +32,7 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 		assertStatus(t, response.Code, http.StatusOK)
 
 		got := getLeagueFromResponse(t, response.Body)
-		want := []api.Player{
+		want := []Player{
 			{"Pepper", 3},
 		}
 		assertLeague(t, got, want)
