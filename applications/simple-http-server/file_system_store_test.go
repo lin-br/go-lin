@@ -24,5 +24,9 @@ func TestFileSystemStore(t *testing.T) {
 		}
 
 		assertLeague(t, got, want)
+
+		// If we read again, the test will not pass.
+		got = store.GetLeague()
+		assertLeague(t, got, want)
 	})
 }
