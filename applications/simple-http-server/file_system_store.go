@@ -7,10 +7,12 @@ import (
 )
 
 type FileSystemPlayerStore struct {
-	database io.Reader
+	// update the reader, and now we can read one more time
+	database io.ReadSeeker
 }
 
 func (fs FileSystemPlayerStore) GetLeague() []model.Player {
+	_, _ = fs.database.Seek(0, io.SeekStart)
 	league, _ := model.NewLeague(fs.database)
 	return league
 }

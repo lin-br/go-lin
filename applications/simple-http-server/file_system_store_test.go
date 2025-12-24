@@ -8,7 +8,6 @@ import (
 )
 
 func TestFileSystemStore(t *testing.T) {
-
 	t.Run("league from a reader", func(t *testing.T) {
 		database := strings.NewReader(`[
 			{"Name": "Cleo", "Wins": 10},
