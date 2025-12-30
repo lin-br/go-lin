@@ -14,7 +14,7 @@ const JsonContentType = "application/json"
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
-	GetLeagueTable() []model.Player
+	GetLeagueTable() model.League
 }
 
 type PlayerServer struct {

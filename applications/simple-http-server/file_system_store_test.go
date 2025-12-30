@@ -44,7 +44,7 @@ func TestFileSystemStore(t *testing.T) {
 
 		store := FileSystemPlayerStore{database}
 
-		got := store.GetLeague()
+		got := store.GetLeagueTable()
 
 		want := []model.Player{
 			{"Cleo", 10},
@@ -54,7 +54,7 @@ func TestFileSystemStore(t *testing.T) {
 		assertLeague(t, got, want)
 
 		// If we read again, the test will not pass.
-		got = store.GetLeague()
+		got = store.GetLeagueTable()
 		assertLeague(t, got, want)
 	})
 

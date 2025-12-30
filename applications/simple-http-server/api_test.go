@@ -15,7 +15,7 @@ import (
 type StubPlayerStore struct {
 	scores      map[string]int
 	winCalls    []string
-	leagueTable []model.Player
+	leagueTable model.League
 }
 
 func (s *StubPlayerStore) GetPlayerScore(name string) int {
@@ -27,7 +27,7 @@ func (s *StubPlayerStore) RecordWin(name string) {
 	s.winCalls = append(s.winCalls, name)
 }
 
-func (s *StubPlayerStore) GetLeagueTable() []model.Player {
+func (s *StubPlayerStore) GetLeagueTable() model.League {
 	return s.leagueTable
 }
 

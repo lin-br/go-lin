@@ -13,14 +13,18 @@ type FileSystemPlayerStore struct {
 	database io.ReadWriteSeeker
 }
 
-func (fs *FileSystemPlayerStore) GetLeague() model.League {
+func NewFileSystemPlayerStore(database io.ReadWriteSeeker) *FileSystemPlayerStore {
+	return &FileSystemPlayerStore{database: database}
+}
+
+func (fs *FileSystemPlayerStore) GetLeagueTable() model.League {
 	_, _ = fs.database.Seek(0, io.SeekStart)
 	league, _ := model.NewLeague(fs.database)
 	return league
 }
 
 func (fs *FileSystemPlayerStore) GetPlayerScore(name string) int {
-	player := fs.GetLeague().Find(name)
+	player := fs.GetLeagueTable().Find(name)
 
 	if player != nil {
 		return player.Wins
@@ -30,7 +34,7 @@ func (fs *FileSystemPlayerStore) GetPlayerScore(name string) int {
 }
 
 func (fs *FileSystemPlayerStore) RecordWin(name string) {
-	league := fs.GetLeague()
+	league := fs.GetLeagueTable()
 	player := league.Find(name)
 
 	if player != nil {
