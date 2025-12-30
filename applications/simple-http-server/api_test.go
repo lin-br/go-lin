@@ -6,10 +6,10 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"reflect"
 	"testing"
 
 	"github.com/lin-br/go-lin/applications/simple-http-server/model"
+	"github.com/lin-br/go-lin/applications/simple-http-server/utils"
 )
 
 type StubPlayerStore struct {
@@ -64,13 +64,6 @@ func getLeagueFromResponse(t testing.TB, body io.Reader) (league []model.Player)
 	}
 
 	return
-}
-
-func assertLeague(t testing.TB, got, want []model.Player) {
-	t.Helper()
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %v want %v", got, want)
-	}
 }
 
 func newLeagueRequest() *http.Request {
@@ -175,6 +168,6 @@ func TestLeague(t *testing.T) {
 		got := getLeagueFromResponse(t, response.Body)
 		assertStatus(t, response.Code, http.StatusOK)
 		assertContentType(t, response, JsonContentType)
-		assertLeague(t, got, wantedLeague)
+		utils.AssertLeague(t, got, wantedLeague)
 	})
 }

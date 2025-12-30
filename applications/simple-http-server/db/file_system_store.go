@@ -1,4 +1,4 @@
-package simple_http_server
+package db
 
 import (
 	"encoding/json"

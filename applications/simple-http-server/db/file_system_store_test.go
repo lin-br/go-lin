@@ -1,4 +1,4 @@
-package simple_http_server
+package db
 
 import (
 	"io"
@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/lin-br/go-lin/applications/simple-http-server/model"
+	"github.com/lin-br/go-lin/applications/simple-http-server/utils"
 )
 
 func assertScoreEquals(t *testing.T, got int, want int) {
@@ -51,11 +52,11 @@ func TestFileSystemStore(t *testing.T) {
 			{"Chris", 33},
 		}
 
-		assertLeague(t, got, want)
+		utils.AssertLeague(t, got, want)
 
 		// If we read again, the test will not pass.
 		got = store.GetLeagueTable()
-		assertLeague(t, got, want)
+		utils.AssertLeague(t, got, want)
 	})
 
 	t.Run("get player score", func(t *testing.T) {

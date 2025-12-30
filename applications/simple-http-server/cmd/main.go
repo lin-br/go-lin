@@ -6,6 +6,7 @@ import (
 	"os"
 
 	api "github.com/lin-br/go-lin/applications/simple-http-server"
+	"github.com/lin-br/go-lin/applications/simple-http-server/db"
 )
 
 const (
@@ -21,7 +22,7 @@ func main() {
 		log.Fatalf("problem to open the file %s %v", DbFileName, err)
 	}
 
-	store := api.NewFileSystemPlayerStore(file)
+	store := db.NewFileSystemPlayerStore(file)
 	server := api.NewPlayerServer(store)
 
 	if err := http.ListenAndServe(":8080", server); err != nil {
