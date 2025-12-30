@@ -21,7 +21,7 @@ func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
 }
 
 func (i *InMemoryPlayerStore) GetLeagueTable() []model.Player {
-	league := make([]model.Player, len(i.store))
+	league := make([]model.Player, 0)
 	for name, wins := range i.store {
 		league = append(league, model.Player{Name: name, Wins: wins})
 	}

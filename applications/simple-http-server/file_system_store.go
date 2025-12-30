@@ -1,6 +1,7 @@
 package simple_http_server
 
 import (
+	"encoding/json"
 	"io"
 
 	"github.com/lin-br/go-lin/applications/simple-http-server/model"
@@ -8,24 +9,34 @@ import (
 
 type FileSystemPlayerStore struct {
 	// update the reader, and now we can read one more time
-	database io.ReadSeeker
+	// with the ReadWrite, now we can write too
+	database io.ReadWriteSeeker
 }
 
-func (fs *FileSystemPlayerStore) GetLeague() []model.Player {
+func (fs *FileSystemPlayerStore) GetLeague() model.League {
 	_, _ = fs.database.Seek(0, io.SeekStart)
 	league, _ := model.NewLeague(fs.database)
 	return league
 }
 
 func (fs *FileSystemPlayerStore) GetPlayerScore(name string) int {
-	var wins int
+	player := fs.GetLeague().Find(name)
 
-	for _, player := range fs.GetLeague() {
-		if player.Name == name {
-			wins = player.Wins
-			break
-		}
+	if player != nil {
+		return player.Wins
 	}
 
-	return wins
+	return 0
+}
+
+func (fs *FileSystemPlayerStore) RecordWin(name string) {
+	league := fs.GetLeague()
+	player := league.Find(name)
+
+	if player != nil {
+		player.Wins++
+	}
+
+	_, _ = fs.database.Seek(0, io.SeekStart)
+	_ = json.NewEncoder(fs.database).Encode(league)
 }

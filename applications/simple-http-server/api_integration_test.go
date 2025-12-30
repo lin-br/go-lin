@@ -32,7 +32,7 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 		assertStatus(t, response.Code, http.StatusOK)
 
 		got := getLeagueFromResponse(t, response.Body)
-		want := []model.Player{
+		want := model.League{
 			{"Pepper", 3},
 		}
 		assertLeague(t, got, want)

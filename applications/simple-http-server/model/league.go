@@ -6,8 +6,10 @@ import (
 	"io"
 )
 
-func NewLeague(reader io.Reader) ([]Player, error) {
-	var league []Player
+type League []Player
+
+func NewLeague(reader io.Reader) (League, error) {
+	league := make(League, 0)
 	err := json.NewDecoder(reader).Decode(&league)
 
 	if err != nil {
@@ -15,4 +17,13 @@ func NewLeague(reader io.Reader) ([]Player, error) {
 	}
 
 	return league, nil
+}
+
+func (l League) Find(name string) *Player {
+	for index, player := range l {
+		if player.Name == name {
+			return &l[index]
+		}
+	}
+	return nil
 }
