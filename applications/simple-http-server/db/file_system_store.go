@@ -2,6 +2,7 @@ package db
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 
@@ -17,14 +18,18 @@ type FileSystemPlayerStore struct {
 	league model.League
 }
 
-func NewFileSystemPlayerStore(file *os.File) *FileSystemPlayerStore {
+func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
 	_, _ = file.Seek(0, io.SeekStart)
-	league, _ := model.NewLeague(file)
+	league, err := model.NewLeague(file)
+
+	if err != nil {
+		return nil, fmt.Errorf("problem loading player store from file %s, %v", file.Name(), err)
+	}
 
 	return &FileSystemPlayerStore{
 		database: json.NewEncoder(&tape{file}),
 		league:   league,
-	}
+	}, nil
 }
 
 func (fs *FileSystemPlayerStore) GetLeagueTable() model.League {

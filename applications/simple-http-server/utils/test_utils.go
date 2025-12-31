@@ -13,3 +13,10 @@ func AssertLeague(t testing.TB, got, want []model.Player) {
 		t.Errorf("got %v want %v", got, want)
 	}
 }
+
+func AssertNoError(t testing.TB, err error) {
+	t.Helper()
+	if err != nil {
+		t.Fatalf("didn't expect an error but got one, %v", err)
+	}
+}
