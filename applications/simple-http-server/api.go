@@ -47,7 +47,7 @@ func (p *PlayerServer) playersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
+func (p *PlayerServer) leagueHandler(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("content-type", JsonContentType)
 	if json.NewEncoder(w).Encode(p.Store.GetLeagueTable()) != nil {
 		w.WriteHeader(http.StatusInternalServerError)
