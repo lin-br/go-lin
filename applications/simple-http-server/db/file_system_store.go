@@ -9,19 +9,20 @@ import (
 )
 
 type FileSystemPlayerStore struct {
-	// update the database to io.Writer as it encapsulates the Seek part
-	database io.Writer
+	// update the database to *json.Encoder to don't
+	// need to create a new encoder every time
+	database *json.Encoder
 	// Cache the league in memory so we don't need
 	// to read from the file on every request.
 	league model.League
 }
 
-func NewFileSystemPlayerStore(database *os.File) *FileSystemPlayerStore {
-	_, _ = database.Seek(0, io.SeekStart)
-	league, _ := model.NewLeague(database)
+func NewFileSystemPlayerStore(file *os.File) *FileSystemPlayerStore {
+	_, _ = file.Seek(0, io.SeekStart)
+	league, _ := model.NewLeague(file)
 
 	return &FileSystemPlayerStore{
-		database: &tape{database},
+		database: json.NewEncoder(&tape{file}),
 		league:   league,
 	}
 }
@@ -49,5 +50,5 @@ func (fs *FileSystemPlayerStore) RecordWin(name string) {
 		fs.league = append(fs.league, model.Player{Name: name, Wins: 1})
 	}
 
-	_ = json.NewEncoder(fs.database).Encode(fs.league)
+	_ = fs.database.Encode(fs.league)
 }
