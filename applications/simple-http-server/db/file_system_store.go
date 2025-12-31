@@ -3,6 +3,7 @@ package db
 import (
 	"encoding/json"
 	"io"
+	"os"
 
 	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
@@ -15,7 +16,7 @@ type FileSystemPlayerStore struct {
 	league model.League
 }
 
-func NewFileSystemPlayerStore(database io.ReadWriteSeeker) *FileSystemPlayerStore {
+func NewFileSystemPlayerStore(database *os.File) *FileSystemPlayerStore {
 	_, _ = database.Seek(0, io.SeekStart)
 	league, _ := model.NewLeague(database)
 

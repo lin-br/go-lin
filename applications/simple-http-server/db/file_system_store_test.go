@@ -1,7 +1,6 @@
 package db
 
 import (
-	"io"
 	"os"
 	"testing"
 
@@ -17,7 +16,7 @@ func assertScoreEquals(t *testing.T, got int, want int) {
 
 // With the change to ReadWriteSeeker in FileSystemPlayerStore.database,
 // the strings.Reader can't work, so we create a temporary file.
-func createTempFile(t testing.TB, initialData string) (io.ReadWriteSeeker, func()) {
+func createTempFile(t testing.TB, initialData string) (*os.File, func()) {
 	t.Helper()
 
 	tempFile, err := os.CreateTemp("", "db")
