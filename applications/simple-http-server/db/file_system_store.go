@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"sort"
 
 	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
@@ -19,7 +20,11 @@ type FileSystemPlayerStore struct {
 }
 
 func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
-	_, _ = file.Seek(0, io.SeekStart)
+	err := initialisePlayerDBFile(file)
+	if err != nil {
+		return nil, fmt.Errorf("problem initialising player db file, %v", err)
+	}
+
 	league, err := model.NewLeague(file)
 
 	if err != nil {
@@ -33,6 +38,9 @@ func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
 }
 
 func (fs *FileSystemPlayerStore) GetLeagueTable() model.League {
+	sort.Slice(fs.league, func(i, j int) bool {
+		return fs.league[i].Wins > fs.league[j].Wins
+	})
 	return fs.league
 }
 
@@ -56,4 +64,21 @@ func (fs *FileSystemPlayerStore) RecordWin(name string) {
 	}
 
 	_ = fs.database.Encode(fs.league)
+}
+
+func initialisePlayerDBFile(file *os.File) error {
+	_, _ = file.Seek(0, io.SeekStart)
+
+	info, err := file.Stat()
+
+	if err != nil {
+		return fmt.Errorf("problem getting file info from file %s, %v", file.Name(), err)
+	}
+
+	if info.Size() == 0 {
+		_, _ = file.Write([]byte("[]"))
+		_, _ = file.Seek(0, io.SeekStart)
+	}
+
+	return nil
 }
