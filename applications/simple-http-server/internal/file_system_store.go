@@ -9,12 +9,33 @@ import (
 )
 
 type FileSystemPlayerStore struct {
-	// update the database to *json.Encoder to don't
+	// update the database to *json.Encoder doesn't
 	// need to create a new encoder every time
 	database *json.Encoder
 	// Cache the league in memory so we don't need
 	// to read from the file on every request.
 	league League
+}
+
+func FileSystemPlayerStoreFromFile(path string) (*FileSystemPlayerStore, func(), error) {
+	// Open, or create, a file in the project root directory
+	db, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("problem opening %s %v", path, err)
+	}
+
+	closeFunc := func() {
+		_ = db.Close()
+	}
+
+	store, err := NewFileSystemPlayerStore(db)
+
+	if err != nil {
+		return nil, nil, fmt.Errorf("problem creating file system player store, %v ", err)
+	}
+
+	return store, closeFunc, nil
 }
 
 func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
