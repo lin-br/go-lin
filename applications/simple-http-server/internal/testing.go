@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func AssertLeague(t testing.TB, got, want []Player) {
@@ -100,4 +101,33 @@ func NewPostWinRequest(name string) *http.Request {
 func NewLeagueRequest() *http.Request {
 	req, _ := http.NewRequest(http.MethodGet, "/league", nil)
 	return req
+}
+
+type scheduledAlert struct {
+	at     time.Duration
+	amount int
+}
+
+func (s scheduledAlert) String() string {
+	return fmt.Sprintf("%d chips at %v", s.amount, s.at)
+}
+
+type SpyBlindAlerter struct {
+	alerts []scheduledAlert
+}
+
+func (s *SpyBlindAlerter) ScheduleAlertAt(at time.Duration, amount int) {
+	s.alerts = append(s.alerts, scheduledAlert{at, amount})
+}
+
+func AssertScheduledAlert(t *testing.T, got scheduledAlert, want scheduledAlert) {
+	amountGot := got.amount
+	if amountGot != want.amount {
+		t.Errorf("got amount %d, want %d", amountGot, want.amount)
+	}
+
+	gotScheduledTime := got.at
+	if gotScheduledTime != want.at {
+		t.Errorf("got scheduled time of %v, want %v", gotScheduledTime, want.at)
+	}
 }
