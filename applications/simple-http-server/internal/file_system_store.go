@@ -1,4 +1,4 @@
-package db
+package poker
 
 import (
 	"encoding/json"
@@ -6,8 +6,6 @@ import (
 	"io"
 	"os"
 	"sort"
-
-	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
 
 type FileSystemPlayerStore struct {
@@ -16,7 +14,7 @@ type FileSystemPlayerStore struct {
 	database *json.Encoder
 	// Cache the league in memory so we don't need
 	// to read from the file on every request.
-	league model.League
+	league League
 }
 
 func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
@@ -25,7 +23,7 @@ func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
 		return nil, fmt.Errorf("problem initialising player db file, %v", err)
 	}
 
-	league, err := model.NewLeague(file)
+	league, err := NewLeague(file)
 
 	if err != nil {
 		return nil, fmt.Errorf("problem loading player store from file %s, %v", file.Name(), err)
@@ -37,7 +35,7 @@ func NewFileSystemPlayerStore(file *os.File) (*FileSystemPlayerStore, error) {
 	}, nil
 }
 
-func (fs *FileSystemPlayerStore) GetLeagueTable() model.League {
+func (fs *FileSystemPlayerStore) GetLeagueTable() League {
 	sort.Slice(fs.league, func(i, j int) bool {
 		return fs.league[i].Wins > fs.league[j].Wins
 	})
@@ -60,7 +58,7 @@ func (fs *FileSystemPlayerStore) RecordWin(name string) {
 	if player != nil {
 		player.Wins++
 	} else {
-		fs.league = append(fs.league, model.Player{Name: name, Wins: 1})
+		fs.league = append(fs.league, Player{Name: name, Wins: 1})
 	}
 
 	_ = fs.database.Encode(fs.league)

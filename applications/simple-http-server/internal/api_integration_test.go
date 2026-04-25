@@ -1,13 +1,9 @@
-package simple_http_server
+package poker
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	. "github.com/lin-br/go-lin/applications/simple-http-server/db"
-	"github.com/lin-br/go-lin/applications/simple-http-server/model"
-	"github.com/lin-br/go-lin/applications/simple-http-server/utils"
 )
 
 func TestRecordingWinsAndRetrievingThem(t *testing.T) {
@@ -33,9 +29,9 @@ func TestRecordingWinsAndRetrievingThem(t *testing.T) {
 		assertStatus(t, response.Code, http.StatusOK)
 
 		got := getLeagueFromResponse(t, response.Body)
-		want := model.League{
+		want := League{
 			{"Pepper", 3},
 		}
-		utils.AssertLeague(t, got, want)
+		AssertLeague(t, got, want)
 	})
 }

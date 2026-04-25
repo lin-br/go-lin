@@ -1,12 +1,10 @@
-package simple_http_server
+package poker
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
-
-	"github.com/lin-br/go-lin/applications/simple-http-server/model"
 )
 
 const JsonContentType = "application/json"
@@ -14,7 +12,7 @@ const JsonContentType = "application/json"
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
-	GetLeagueTable() model.League
+	GetLeagueTable() League
 }
 
 type PlayerServer struct {

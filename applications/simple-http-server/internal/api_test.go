@@ -1,4 +1,4 @@
-package simple_http_server
+package poker
 
 import (
 	"encoding/json"
@@ -7,15 +7,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/lin-br/go-lin/applications/simple-http-server/model"
-	"github.com/lin-br/go-lin/applications/simple-http-server/utils"
 )
 
 type StubPlayerStore struct {
 	scores      map[string]int
 	winCalls    []string
-	leagueTable model.League
+	leagueTable League
 }
 
 func (s *StubPlayerStore) GetPlayerScore(name string) int {
@@ -27,7 +24,7 @@ func (s *StubPlayerStore) RecordWin(name string) {
 	s.winCalls = append(s.winCalls, name)
 }
 
-func (s *StubPlayerStore) GetLeagueTable() model.League {
+func (s *StubPlayerStore) GetLeagueTable() League {
 	return s.leagueTable
 }
 
@@ -55,7 +52,7 @@ func assertStatus(t testing.TB, got, want int) {
 	}
 }
 
-func getLeagueFromResponse(t testing.TB, body io.Reader) (league []model.Player) {
+func getLeagueFromResponse(t testing.TB, body io.Reader) (league []Player) {
 	t.Helper()
 	err := json.NewDecoder(body).Decode(&league)
 
@@ -153,7 +150,7 @@ func TestLeague(t *testing.T) {
 	})
 
 	t.Run("it returns the league table as JSON", func(t *testing.T) {
-		wantedLeague := []model.Player{
+		wantedLeague := []Player{
 			{"Cleo", 32},
 			{"Chris", 20},
 			{"Tiest", 14},
@@ -168,6 +165,6 @@ func TestLeague(t *testing.T) {
 		got := getLeagueFromResponse(t, response.Body)
 		assertStatus(t, response.Code, http.StatusOK)
 		assertContentType(t, response, JsonContentType)
-		utils.AssertLeague(t, got, wantedLeague)
+		AssertLeague(t, got, wantedLeague)
 	})
 }
