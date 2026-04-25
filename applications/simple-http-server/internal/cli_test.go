@@ -14,7 +14,7 @@ func TestCLI(t *testing.T) {
 		cli := &CLI{playerStore, in}
 		cli.PlayPoker()
 
-		assertPlayerWin(t, playerStore, "Chris")
+		AssertPlayerWin(t, playerStore, "Chris")
 	})
 
 	t.Run("record cleo win from user input", func(t *testing.T) {
@@ -24,7 +24,7 @@ func TestCLI(t *testing.T) {
 		cli := &CLI{playerStore, in}
 		cli.PlayPoker()
 
-		assertPlayerWin(t, playerStore, "Cleo")
+		AssertPlayerWin(t, playerStore, "Cleo")
 	})
 
 }

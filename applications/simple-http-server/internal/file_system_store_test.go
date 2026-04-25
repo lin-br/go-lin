@@ -48,12 +48,12 @@ func TestFileSystemStore(t *testing.T) {
 			{"Cleo", 10},
 		}
 
-		assertLeague(t, got, want)
-		assertNoError(t, err)
+		AssertLeague(t, got, want)
+		AssertNoError(t, err)
 
 		// If we read again, the test will not pass.
 		got = store.GetLeagueTable()
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 	})
 
 	t.Run("get player score", func(t *testing.T) {
@@ -67,7 +67,7 @@ func TestFileSystemStore(t *testing.T) {
 		got := store.GetPlayerScore("Chris")
 		want := 33
 		assertScoreEquals(t, got, want)
-		assertNoError(t, err)
+		AssertNoError(t, err)
 	})
 
 	t.Run("store wins for existing players", func(t *testing.T) {
@@ -83,7 +83,7 @@ func TestFileSystemStore(t *testing.T) {
 		got := store.GetPlayerScore("Chris")
 		want := 34
 		assertScoreEquals(t, got, want)
-		assertNoError(t, err)
+		AssertNoError(t, err)
 	})
 
 	t.Run("store wins for new players", func(t *testing.T) {
@@ -99,7 +99,7 @@ func TestFileSystemStore(t *testing.T) {
 		got := store.GetPlayerScore("Pepper")
 		want := 1
 		assertScoreEquals(t, got, want)
-		assertNoError(t, err)
+		AssertNoError(t, err)
 	})
 
 	t.Run("works with an empty file", func(t *testing.T) {
@@ -108,7 +108,7 @@ func TestFileSystemStore(t *testing.T) {
 
 		_, err := NewFileSystemPlayerStore(database)
 
-		assertNoError(t, err)
+		AssertNoError(t, err)
 	})
 
 	//file_system_store_test.go
@@ -120,7 +120,7 @@ func TestFileSystemStore(t *testing.T) {
 
 		store, err := NewFileSystemPlayerStore(database)
 
-		assertNoError(t, err)
+		AssertNoError(t, err)
 
 		got := store.GetLeagueTable()
 
@@ -129,10 +129,10 @@ func TestFileSystemStore(t *testing.T) {
 			{"Cleo", 10},
 		}
 
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 
 		// read again
 		got = store.GetLeagueTable()
-		assertLeague(t, got, want)
+		AssertLeague(t, got, want)
 	})
 }
