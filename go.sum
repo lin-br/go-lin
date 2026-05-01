@@ -1,2 +1,4 @@
 github.com/quii/learn-go-with-tests v0.0.0-20260320152830-46b468ac0866 h1:wtDIfiLNjgnEVFUVog/RPpIR0N2pEGGuWQF9RR8+5rM=
 github.com/quii/learn-go-with-tests v0.0.0-20260320152830-46b468ac0866/go.mod h1:rUhpcyi1ujFfC9dS6nFdFX2pQrj9Jm9fZ8KRtB9P04w=
+go.yaml.in/yaml/v4 v4.0.0-rc.4 h1:UP4+v6fFrBIb1l934bDl//mmnoIZEDK0idg1+AIvX5U=
+go.yaml.in/yaml/v4 v4.0.0-rc.4/go.mod h1:aZqd9kCMsGL7AuUv/m/PvWLdg5sjJsZ4oHDEnfPPfY0=
